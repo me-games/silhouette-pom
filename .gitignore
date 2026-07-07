@@ -1,0 +1,7 @@
+node_modules/
+dist/
+.genex/
+genex_key
+genex_key.pub
+.env
+.DS_Store

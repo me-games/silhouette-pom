@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>silhouette parallax occlusion mapping - three.js webgpu / tsl</title>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<style>
+			body { margin: 0; background: #11151c; color: #fff; font-family: monospace; overscroll-behavior: none; }
+			#info { position: absolute; top: 0; width: 100%; padding: 10px; box-sizing: border-box; text-align: center; z-index: 1; pointer-events: none; }
+			#info a { color: #6ec1ff; pointer-events: auto; }
+		</style>
+	</head>
+
+	<body>
+
+		<div id="info">
+			<a href="https://github.com/SkyeShark/threejs-silhouette-pom" target="_blank" rel="noopener">silhouette parallax occlusion mapping</a> for three.js WebGPU / TSL<br />
+			<small>
+				Height fields ray marched in TSL, silhouettes clipped through alpha test. Every surface is flat geometry:<br />
+				the wall carves its outline at the relief tile bounds, the inflated column and pipe shells clip rays past<br />
+				their curved horizons. All maps are generated procedurally at startup.
+			</small>
+		</div>
+
+		<script type="module">
+
+			// --- Genex port glue (build/boot only; the author's code lives untouched in main.js) ---
+
+			import { initGameSentry } from '@genex-ai/embed-sdk/sentry';
+			import { initEmbed } from '@genex-ai/embed-sdk';
+			import { GENEX } from './src/genex.config';
+
+			initGameSentry( { slug: GENEX.slug } );
+			initEmbed( { slug: GENEX.slug, apiUrl: GENEX.apiUrl, dashboardOrigins: GENEX.dashboardOrigins } );
+
+			if ( navigator.gpu ) {
+
+				import( './main.js' );
+
+			} else {
+
+				const msg = document.createElement( 'div' );
+				msg.style.cssText = 'position:fixed;inset:0;display:flex;align-items:center;justify-content:center;background:#11151c;color:#fff;font-family:monospace;font-size:16px;text-align:center;padding:24px;z-index:2;';
+				msg.textContent = 'This demo needs WebGPU \u2014 recent Chrome, Edge, or Safari';
+				document.body.appendChild( msg );
+
+			}
+
+		</script>
+
+	</body>
+
+</html>
